@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccs7msofsqjj8"]
+
+[ext_resource type="Script" path="res://pawn/Pawn.cs" id="1_g6mya"]
+[ext_resource type="Texture2D" uid="uid://k2g81m826vp1" path="res://icon.svg" id="2_2xfol"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vqu5m"]
+radius = 41.67
+
+[node name="Pawn" type="Node2D" node_paths=PackedStringArray("collision")]
+position = Vector2(239, 175)
+script = ExtResource("1_g6mya")
+collision = NodePath("Collision")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2xfol")
+
+[node name="Collision" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="Collision"]
+shape = SubResource("CircleShape2D_vqu5m")

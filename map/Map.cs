@@ -1,12 +1,37 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public partial class Map : TileMapLayer
 {
+    [Export] Node2D tilesParentNode;
+    [Export] PackedScene tilePackedScene;
+
     AStar2D astar;
-    Dictionary<Vector2I, int> positionToIndex;
+    Godot.Collections.Dictionary<Vector2I, int> positionToIndex;
     Array<Vector2I> usedCells;
+
+    [Signal] public delegate void MoveFromToEventHandler(Pawn sender, Vector2I from, Vector2I to);
+
+    private void Move(Pawn sender, Vector2I from, Vector2I to)
+    {
+        var mapFrom = LocalToMap(from);
+        var mapTo = LocalToMap(to);
+
+        var fromId = positionToIndex[mapFrom];
+        var toId = positionToIndex[mapTo];
+
+        var path = astar.GetPointPath(fromId, toId);
+
+        if (path.Length == 0)
+        {
+            sender.Move(null);
+        }
+        else
+        {
+            var destination = (Vector2I)path[^1];
+            sender.Move(MapToLocal(destination));
+        }
+    }
 
     private void EnableNavPointsUpTo(int x)
     {
@@ -24,9 +49,16 @@ public partial class Map : TileMapLayer
         }
     }
 
+    private void AddTile(Vector2I position)
+    {
+        var tile = tilePackedScene.Instantiate() as Area2D;
+        tile.Position = MapToLocal(position);
+        tilesParentNode.AddChild(tile);
+    }
+
     private void Debug()
     {
-        EnableNavPointsUpTo(1);
+        // EnableNavPointsUpTo(1);
 
         foreach (var cell in usedCells)
         {
@@ -43,6 +75,8 @@ public partial class Map : TileMapLayer
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        Events.Instance.MoveFromTo += Move;
+
         astar = new();
         positionToIndex = new();
         usedCells = GetUsedCells();
@@ -53,6 +87,9 @@ public partial class Map : TileMapLayer
         {
             astar.AddPoint(index, cell);
             positionToIndex.Add(cell, index);
+
+            AddTile(cell);
+
             index++;
         }
 
@@ -70,6 +107,8 @@ public partial class Map : TileMapLayer
                 astar.ConnectPoints(cellIndex, neighborIndex, true);
             }
         }
+
+        Debug();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

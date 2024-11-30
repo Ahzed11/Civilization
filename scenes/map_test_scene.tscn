@@ -1,12 +1,22 @@
-[gd_scene load_steps=3 format=4 uid="uid://tlegp4usqin"]
+[gd_scene load_steps=5 format=4 uid="uid://tlegp4usqin"]
 
 [ext_resource type="TileSet" uid="uid://bro7h3wk0j76k" path="res://map/tileset.tres" id="1_gi63s"]
 [ext_resource type="Script" path="res://map/Map.cs" id="2_atjul"]
+[ext_resource type="PackedScene" uid="uid://3e0t6uu2dafy" path="res://map/tile/tile.tscn" id="3_8uhx3"]
+[ext_resource type="PackedScene" uid="uid://ccs7msofsqjj8" path="res://pawn/pawn.tscn" id="4_euyrc"]
 
 [node name="MapTestScene" type="Node2D"]
 
-[node name="Map" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAEAAAAGAAUAAAABAAEAAAAGAAUAAAABAAIAAAAGAAUAAAACAAIAAAAGAAUAAAACAAEAAAAGAAUAAAADAAIAAAAGAAUAAAADAAEAAAAGAAUAAAAEAAIAAAAGAAUAAAAEAAEAAAAGAAUAAAADAAMAAAAFAAEAAAAEAAQAAAAFAAEAAAAEAAMAAAAFAAEAAAAFAAQAAAAFAAEAAAAGAAQAAAAFAAEAAAAFAAMAAAAFAAEAAAAGAAMAAAAFAAEAAAAHAAMAAAAFAAEAAAAHAAQAAAAFAAEAAAAFAAUAAAAFAAEAAAAEAAUAAAAFAAEAAAA=")
+[node name="Map" type="TileMapLayer" parent="." node_paths=PackedStringArray("tilesParentNode")]
+tile_map_data = PackedByteArray("AAAAAAEAAAAGAAUAAAABAAEAAAAGAAUAAAABAAIAAAAGAAUAAAACAAIAAAAGAAUAAAACAAEAAAAGAAUAAAADAAIAAAAGAAUAAAADAAEAAAAGAAUAAAAEAAIAAAAGAAUAAAAEAAEAAAAGAAUAAAADAAMAAAAFAAEAAAAEAAQAAAAFAAEAAAAEAAMAAAAFAAEAAAAFAAQAAAAFAAEAAAAGAAQAAAAFAAEAAAAFAAMAAAAFAAEAAAAGAAMAAAAFAAEAAAAHAAMAAAAFAAEAAAAHAAQAAAAFAAEAAAAFAAUAAAAFAAEAAAAEAAUAAAAFAAEAAAAAAAAAAAAGAAUAAAD/////AAAGAAUAAAAAAP//AAAGAAUAAAABAAAAAAAGAAUAAAABAP//AAAGAAUAAAACAAAAAAAGAAUAAAA=")
 tile_set = ExtResource("1_gi63s")
 navigation_enabled = false
 script = ExtResource("2_atjul")
+tilesParentNode = NodePath("Tiles")
+tilePackedScene = ExtResource("3_8uhx3")
+
+[node name="Tiles" type="Node2D" parent="Map"]
+
+[node name="Pawns" type="Node2D" parent="Map"]
+
+[node name="Pawn" parent="Map/Pawns" instance=ExtResource("4_euyrc")]
