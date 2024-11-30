@@ -11,7 +11,7 @@ public partial class Pawn : Node2D
 	bool isDragged;
 	Vector2 originalPosition;
 	bool isMouseHovering = false;
-	public int MaxMove { get; } = 2;
+	public int MaxDistance { get; } = 2;
 	private Vector2 target;
 
 	public void Move(Vector2? destination)
@@ -58,6 +58,16 @@ public partial class Pawn : Node2D
 		{
 			var mousePosition = GetViewport().GetMousePosition();
 			Position = mousePosition;
+
+			var areas = collision.GetOverlappingAreas();
+			if (areas.Count > 0)
+			{
+				var closestArea = GetClosestArea(areas);
+
+				var from = (Vector2I)originalPosition.Floor();
+				var to = (Vector2I)closestArea.Floor();
+				Events.Instance.EmitAskMoveFromTo(from, to, MaxDistance);
+			}
 		}
 	}
 
@@ -71,9 +81,12 @@ public partial class Pawn : Node2D
 				isDragged = true;
 			}
 		}
-		else if (@event.IsActionReleased(Actions.SELECT))
+
+
+		if (@event.IsActionReleased(Actions.SELECT))
 		{
 			isDragged = false;
+			Events.Instance.EmitPawnReleased(this);
 
 			var areas = collision.GetOverlappingAreas();
 			if (areas.Count > 0)
@@ -82,7 +95,7 @@ public partial class Pawn : Node2D
 
 				var from = (Vector2I)originalPosition.Floor();
 				var to = (Vector2I)closestArea.Floor();
-				Events.Instance.EmitMoveFromTo(this, from, to);
+				Events.Instance.EmitMoveFromTo(this, from, to, MaxDistance);
 			}
 			else
 			{

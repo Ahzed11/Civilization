@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -5,14 +6,13 @@ public partial class Map : TileMapLayer
 {
     [Export] Node2D tilesParentNode;
     [Export] PackedScene tilePackedScene;
+    [Export] Line2D pathDrawer;
 
     AStar2D astar;
-    Godot.Collections.Dictionary<Vector2I, int> positionToIndex;
+    Dictionary<Vector2I, int> positionToIndex;
     Array<Vector2I> usedCells;
 
-    [Signal] public delegate void MoveFromToEventHandler(Pawn sender, Vector2I from, Vector2I to);
-
-    private void Move(Pawn sender, Vector2I from, Vector2I to)
+    private void Move(Pawn sender, Vector2I from, Vector2I to, int maxDistance)
     {
         var mapFrom = LocalToMap(from);
         var mapTo = LocalToMap(to);
@@ -22,7 +22,7 @@ public partial class Map : TileMapLayer
 
         var path = astar.GetPointPath(fromId, toId);
 
-        if (path.Length == 0)
+        if (path.Length == 0 || path.Length > maxDistance + 1)
         {
             sender.Move(null);
         }
@@ -31,6 +31,32 @@ public partial class Map : TileMapLayer
             var destination = (Vector2I)path[^1];
             sender.Move(MapToLocal(destination));
         }
+    }
+
+    private void AskMove(Vector2I from, Vector2I to, int maxDistance)
+    {
+        var mapFrom = LocalToMap(from);
+        var mapTo = LocalToMap(to);
+
+        var fromId = positionToIndex[mapFrom];
+        var toId = positionToIndex[mapTo];
+
+        var path = astar.GetPointPath(fromId, toId);
+
+        pathDrawer.Points = path.Select((x) => MapToLocal((Vector2I)x)).ToArray();
+        if (path.Length == 0 || path.Length > maxDistance + 1)
+        {
+            pathDrawer.DefaultColor = Color.Color8(255, 0, 0, 255);
+        }
+        else
+        {
+            pathDrawer.DefaultColor = Color.Color8(0, 255, 0, 255);
+        }
+    }
+
+    private void OnPawnReleased(Pawn pawn)
+    {
+        pathDrawer.Points = new Vector2[0];
     }
 
     private void EnableNavPointsUpTo(int x)
@@ -76,6 +102,8 @@ public partial class Map : TileMapLayer
     public override void _Ready()
     {
         Events.Instance.MoveFromTo += Move;
+        Events.Instance.AskMoveFromTo += AskMove;
+        Events.Instance.PawnReleased += OnPawnReleased;
 
         astar = new();
         positionToIndex = new();

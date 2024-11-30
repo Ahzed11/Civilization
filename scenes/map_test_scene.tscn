@@ -7,16 +7,21 @@
 
 [node name="MapTestScene" type="Node2D"]
 
-[node name="Map" type="TileMapLayer" parent="." node_paths=PackedStringArray("tilesParentNode")]
+[node name="Map" type="TileMapLayer" parent="." node_paths=PackedStringArray("tilesParentNode", "pathDrawer")]
 tile_map_data = PackedByteArray("AAAAAAEAAAAGAAUAAAABAAEAAAAGAAUAAAABAAIAAAAGAAUAAAACAAIAAAAGAAUAAAACAAEAAAAGAAUAAAADAAIAAAAGAAUAAAADAAEAAAAGAAUAAAAEAAIAAAAGAAUAAAAEAAEAAAAGAAUAAAADAAMAAAAFAAEAAAAEAAQAAAAFAAEAAAAEAAMAAAAFAAEAAAAFAAQAAAAFAAEAAAAGAAQAAAAFAAEAAAAFAAMAAAAFAAEAAAAGAAMAAAAFAAEAAAAHAAMAAAAFAAEAAAAHAAQAAAAFAAEAAAAFAAUAAAAFAAEAAAAEAAUAAAAFAAEAAAAAAAAAAAAGAAUAAAD/////AAAGAAUAAAAAAP//AAAGAAUAAAABAAAAAAAGAAUAAAABAP//AAAGAAUAAAACAAAAAAAGAAUAAAA=")
 tile_set = ExtResource("1_gi63s")
 navigation_enabled = false
 script = ExtResource("2_atjul")
 tilesParentNode = NodePath("Tiles")
 tilePackedScene = ExtResource("3_8uhx3")
+pathDrawer = NodePath("PathDrawer")
 
 [node name="Tiles" type="Node2D" parent="Map"]
 
 [node name="Pawns" type="Node2D" parent="Map"]
 
 [node name="Pawn" parent="Map/Pawns" instance=ExtResource("4_euyrc")]
+
+[node name="PathDrawer" type="Line2D" parent="Map"]
+width = 5.0
+default_color = Color(0.625575, 6.97896e-07, 3.85046e-07, 1)
