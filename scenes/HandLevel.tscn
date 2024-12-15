@@ -1,0 +1,88 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfrvs5yjx6803"]
+
+[ext_resource type="Texture2D" uid="uid://k2g81m826vp1" path="res://Assets/icon.svg" id="1_7uwjg"]
+
+[node name="HandTestScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Hand" type="HFlowContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Hand"]
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="Hand/Card"]
+layout_mode = 2
+color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[node name="Content" type="MarginContainer" parent="Hand/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="Hand/Card/Content"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="TitleSection" type="PanelContainer" parent="Hand/Card/Content/Rows"]
+layout_mode = 2
+
+[node name="TitleText" type="RichTextLabel" parent="Hand/Card/Content/Rows/TitleSection"]
+layout_mode = 2
+text = "Mathematics"
+fit_content = true
+scroll_active = false
+
+[node name="Images" type="HBoxContainer" parent="Hand/Card/Content/Rows"]
+layout_mode = 2
+
+[node name="Left" type="VBoxContainer" parent="Hand/Card/Content/Rows/Images"]
+layout_mode = 2
+
+[node name="ReasearchImage" type="TextureRect" parent="Hand/Card/Content/Rows/Images/Left"]
+layout_mode = 2
+texture = ExtResource("1_7uwjg")
+
+[node name="ResearchType" type="RichTextLabel" parent="Hand/Card/Content/Rows/Images/Left"]
+layout_mode = 2
+text = "Science"
+fit_content = true
+
+[node name="ReasearchLevel" type="RichTextLabel" parent="Hand/Card/Content/Rows/Images/Left"]
+layout_mode = 2
+text = "II"
+fit_content = true
+
+[node name="TechnologyImage" type="TextureRect" parent="Hand/Card/Content/Rows/Images"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_7uwjg")
+expand_mode = 2
+
+[node name="DescriptionSection" type="PanelContainer" parent="Hand/Card/Content/Rows"]
+layout_mode = 2
+
+[node name="Description" type="RichTextLabel" parent="Hand/Card/Content/Rows/DescriptionSection"]
+layout_mode = 2
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent id massa libero. Nunc vel porttitor magna. Maecenas justo felis, imperdiet eget cursus id, facilisis sed dui. Curabitur erat mauris, luctus non leo a, tristique tempus tellus. Vestibulum non condimentum nunc. Sed at egestas nisl"
+fit_content = true
+
+[node name="DescriptionSection2" type="PanelContainer" parent="Hand/Card/Content/Rows"]
+layout_mode = 2
+
+[node name="Boxes" type="RichTextLabel" parent="Hand/Card/Content/Rows/DescriptionSection2"]
+layout_mode = 2
+text = "BOXES"
+fit_content = true

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://nhr08fv0pw3o"]
+
+[ext_resource type="Script" path="res://Scripts/Game/PathDrawer.cs" id="1_emnq0"]
+
+[node name="PathDrawer" type="Node"]
+script = ExtResource("1_emnq0")
+_invalidColor = Color(0.52549, 0, 0, 1)
+_validColor = Color(0, 0.537255, 0, 1)
+
+[node name="LineDrawer" type="Line2D" parent="."]

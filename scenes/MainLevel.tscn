@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://tlegp4usqin"]
+
+[ext_resource type="PackedScene" uid="uid://c73qpfbtbrayc" path="res://Scenes/HexMap/HexMap.tscn" id="1_y6rkv"]
+[ext_resource type="PackedScene" uid="uid://baovwo37qx4ut" path="res://Scenes/Camera/camera.tscn" id="2_3e0dj"]
+
+[node name="MapTestScene" type="Node2D"]
+
+[node name="HexMap" parent="." instance=ExtResource("1_y6rkv")]
+
+[node name="Camera" parent="." instance=ExtResource("2_3e0dj")]

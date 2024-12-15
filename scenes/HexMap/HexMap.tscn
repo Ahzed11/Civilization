@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=4 uid="uid://c73qpfbtbrayc"]
+
+[ext_resource type="TileSet" uid="uid://bro7h3wk0j76k" path="res://Assets/resources/tileset.tres" id="1_vgmy8"]
+[ext_resource type="Script" path="res://Scripts/Game/HexMap.cs" id="2_4yhwj"]
+[ext_resource type="PackedScene" uid="uid://3e0t6uu2dafy" path="res://Scenes/HexMap/tile/tile.tscn" id="3_wgt0f"]
+[ext_resource type="PackedScene" uid="uid://ccs7msofsqjj8" path="res://Scenes/Pawn/pawn.tscn" id="4_64pqw"]
+
+[node name="HexMap" type="TileMapLayer"]
+tile_map_data = PackedByteArray("AAAAAAEAAAAGAAUAAAABAAEAAAAGAAUAAAABAAIAAAAGAAUAAAACAAIAAAAGAAUAAAACAAEAAAAGAAUAAAADAAIAAAAGAAUAAAADAAEAAAAGAAUAAAAEAAIAAAAGAAUAAAAEAAEAAAAGAAUAAAADAAMAAAAFAAEAAAAEAAQAAAAFAAEAAAAEAAMAAAAFAAEAAAAFAAQAAAAFAAEAAAAGAAQAAAAFAAEAAAAFAAMAAAAFAAEAAAAGAAMAAAAFAAEAAAAHAAMAAAAFAAEAAAAHAAQAAAAFAAEAAAAFAAUAAAAFAAEAAAAEAAUAAAAFAAEAAAAAAAAAAAAGAAUAAAD/////AAAGAAUAAAAAAP//AAAGAAUAAAABAAAAAAAGAAUAAAABAP//AAAGAAUAAAACAAAAAAAGAAUAAAA=")
+tile_set = ExtResource("1_vgmy8")
+navigation_enabled = false
+script = ExtResource("2_4yhwj")
+_tilePackedScene = ExtResource("3_wgt0f")
+
+[node name="Tiles" type="Node" parent="."]
+
+[node name="Pawns" type="Node" parent="."]
+
+[node name="Pawn" parent="Pawns" instance=ExtResource("4_64pqw")]
